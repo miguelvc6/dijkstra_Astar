@@ -14,28 +14,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Unpack the verified source bundle
+      - name: Restore the verified source bundle once
         run: |
           python - <<'PY'
           import base64, hashlib, json, lzma, pathlib
           root = pathlib.Path('.')
           manifest = json.loads((root / 'package-ready.json').read_text())
           assert manifest['codec'] == 'xz-json-v1'
-          chunks = []
-          for name in manifest['parts']:
-              chunk = (root / name).read_text().strip()
-              assert hashlib.sha256(chunk.encode()).hexdigest() == manifest['part_sha256'][name], name
-              chunks.append(chunk)
-          data = base64.b64decode(''.join(chunks), validate=True)
-          assert hashlib.sha256(data).hexdigest() == manifest['sha256'], 'Bundle checksum mismatch'
-          sources = json.loads(lzma.decompress(data))
-          for name, content in sources.items():
-              p = pathlib.PurePosixPath(name)
-              assert not p.is_absolute() and '..' not in p.parts and '.git' not in p.parts
-              target = root / name
-              target.parent.mkdir(parents=True, exist_ok=True)
-              target.write_text(content, encoding='utf-8')
-          print('Restored', len(sources), 'source files')
+          stamp = root / 'publication/restored.sha256'
+          if stamp.exists() and stamp.read_text().strip() == manifest['sha256']:
+              print('Sources already restored; rebuilding the current checked-out files.')
+          else:
+              chunks = []
+              for name in manifest['parts']:
+                  chunk = (root / name).read_text().strip()
+                  assert hashlib.sha256(chunk.encode()).hexdigest() == manifest['part_sha256'][name], name
+                  chunks.append(chunk)
+              data = base64.b64decode(''.join(chunks), validate=True)
+              assert hashlib.sha256(data).hexdigest() == manifest['sha256'], 'Bundle checksum mismatch'
+              sources = json.loads(lzma.decompress(data))
+              for name, content in sources.items():
+                  p = pathlib.PurePosixPath(name)
+                  assert not p.is_absolute() and '..' not in p.parts and '.git' not in p.parts
+                  target = root / name
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_text(content, encoding='utf-8')
+              stamp.write_text(manifest['sha256'] + '\n')
+              print('Restored', len(sources), 'source files')
           PY
       - name: Install system build prerequisites
         run: |

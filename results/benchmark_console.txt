@@ -1,0 +1,56 @@
+Main graph                           brute_force      found                cost=8 expansions=13 median_ms=0.008682
+Main graph                           dijkstra_lazy    found                cost=8 expansions=8 median_ms=0.010238
+Main graph                           dijkstra_eager   found                cost=8 expansions=8 median_ms=0.017913
+Main graph                           astar            found                cost=8 expansions=4 median_ms=0.010403
+Admissible but inconsistent          brute_force      found                cost=5 expansions=4 median_ms=0.003609
+Admissible but inconsistent          dijkstra_lazy    found                cost=5 expansions=3 median_ms=0.004823
+Admissible but inconsistent          dijkstra_eager   found                cost=5 expansions=3 median_ms=0.007747
+Admissible but inconsistent          astar            found                cost=5 expansions=4 median_ms=0.006865
+Complete-5                           brute_force      found                cost=1 expansions=16 median_ms=0.01297
+Complete-5                           dijkstra_lazy    found                cost=1 expansions=4 median_ms=0.005608
+Complete-5                           dijkstra_eager   found                cost=1 expansions=4 median_ms=0.009015
+Complete-5                           astar            found                cost=1 expansions=1 median_ms=0.005908
+Complete-7                           brute_force      found                cost=1 expansions=326 median_ms=0.205872
+Complete-7                           dijkstra_lazy    found                cost=1 expansions=6 median_ms=0.008188
+Complete-7                           dijkstra_eager   found                cost=1 expansions=6 median_ms=0.013116
+Complete-7                           astar            found                cost=1 expansions=1 median_ms=0.007499
+Complete-9                           brute_force      budget_exhausted     cost=2 expansions=12504 median_ms=8.789333
+Complete-9                           dijkstra_lazy    found                cost=1 expansions=8 median_ms=0.011048
+Complete-9                           dijkstra_eager   found                cost=1 expansions=8 median_ms=0.018515
+Complete-9                           astar            found                cost=1 expansions=1 median_ms=0.00902
+Complete-11                          brute_force      budget_exhausted     cost=4 expansions=12504 median_ms=9.518159
+Complete-11                          dijkstra_lazy    found                cost=1 expansions=10 median_ms=0.013923
+Complete-11                          dijkstra_eager   found                cost=1 expansions=10 median_ms=0.024255
+Complete-11                          astar            found                cost=1 expansions=1 median_ms=0.010136
+Random-40-seed17                     brute_force      not_run_size_limit   cost= expansions= median_ms=
+Random-40-seed17                     dijkstra_lazy    found                cost=29 expansions=26 median_ms=0.042781
+Random-40-seed17                     dijkstra_eager   found                cost=29 expansions=26 median_ms=0.099328
+Random-40-seed17                     astar            found                cost=29 expansions=26 median_ms=0.060127
+Random-180-seed17                    brute_force      not_run_size_limit   cost= expansions= median_ms=
+Random-180-seed17                    dijkstra_lazy    found                cost=3 expansions=151 median_ms=0.505682
+Random-180-seed17                    dijkstra_eager   found                cost=3 expansions=151 median_ms=1.08661
+Random-180-seed17                    astar            found                cost=3 expansions=151 median_ms=0.608085
+Grid-24x16-open-zero                 brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-open-zero                 dijkstra_lazy    found                cost=21 expansions=288 median_ms=0.291969
+Grid-24x16-open-zero                 dijkstra_eager   found                cost=21 expansions=288 median_ms=0.758912
+Grid-24x16-open-zero                 astar            found                cost=21 expansions=288 median_ms=0.409366
+Grid-24x16-open-euclidean            brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-open-euclidean            dijkstra_lazy    found                cost=21 expansions=288 median_ms=0.294044
+Grid-24x16-open-euclidean            dijkstra_eager   found                cost=21 expansions=288 median_ms=0.755437
+Grid-24x16-open-euclidean            astar            found                cost=21 expansions=21 median_ms=0.070073
+Grid-24x16-open-manhattan            brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-open-manhattan            dijkstra_lazy    found                cost=21 expansions=288 median_ms=0.290177
+Grid-24x16-open-manhattan            dijkstra_eager   found                cost=21 expansions=288 median_ms=0.748295
+Grid-24x16-open-manhattan            astar            found                cost=21 expansions=21 median_ms=0.06925
+Grid-24x16-wall-zero                 brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-wall-zero                 dijkstra_lazy    found                cost=33 expansions=315 median_ms=0.318604
+Grid-24x16-wall-zero                 dijkstra_eager   found                cost=33 expansions=315 median_ms=0.769667
+Grid-24x16-wall-zero                 astar            found                cost=33 expansions=315 median_ms=0.436612
+Grid-24x16-wall-euclidean            brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-wall-euclidean            dijkstra_lazy    found                cost=33 expansions=315 median_ms=0.31373
+Grid-24x16-wall-euclidean            dijkstra_eager   found                cost=33 expansions=315 median_ms=0.773509
+Grid-24x16-wall-euclidean            astar            found                cost=33 expansions=269 median_ms=0.400778
+Grid-24x16-wall-manhattan            brute_force      not_run_size_limit   cost= expansions= median_ms=
+Grid-24x16-wall-manhattan            dijkstra_lazy    found                cost=33 expansions=315 median_ms=0.321277
+Grid-24x16-wall-manhattan            dijkstra_eager   found                cost=33 expansions=315 median_ms=0.772002
+Grid-24x16-wall-manhattan            astar            found                cost=33 expansions=224 median_ms=0.359991

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "lazy_stale",
+    "case": "main",
+    "algorithm": "lazy",
+    "event_index": 203,
+    "relative_line": 16,
+    "kind": "stale"
+  },
+  {
+    "name": "eager_decrease",
+    "case": "main",
+    "algorithm": "eager",
+    "event_index": 71,
+    "relative_line": 26,
+    "kind": "decrease"
+  },
+  {
+    "name": "lazy_goal",
+    "case": "main",
+    "algorithm": "lazy",
+    "event_index": 217,
+    "relative_line": 20,
+    "kind": "finish"
+  },
+  {
+    "name": "astar_main",
+    "case": "main",
+    "algorithm": "astar",
+    "event_index": 152,
+    "relative_line": 20,
+    "kind": "finish"
+  },
+  {
+    "name": "astar_reopen",
+    "case": "reopening",
+    "algorithm": "astar",
+    "event_index": 84,
+    "relative_line": 21,
+    "kind": "reopen"
+  },
+  {
+    "name": "closed_failure",
+    "case": "reopening",
+    "algorithm": "closed_bug",
+    "event_index": 74,
+    "relative_line": 19,
+    "kind": "finish"
+  }
+]

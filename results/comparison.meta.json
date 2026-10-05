@@ -1,0 +1,11 @@
+{
+  "python": "3.11.16",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "repeats": 9,
+  "timing_scope": "Initialization + instrumented search + path recovery; no validation, rendering, tracing, I/O or oracle checks.",
+  "ties": "FIFO by most recent insertion/strict improvement",
+  "brute_force_prefix_budget": 25000,
+  "brute_force_node_limit": 11,
+  "warning": "Runtime is machine- and implementation-dependent, not a complexity proof. CPython heapq and the Python indexed heap have different constant costs."
+}

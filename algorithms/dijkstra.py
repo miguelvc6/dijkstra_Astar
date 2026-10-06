@@ -4,15 +4,17 @@ Public calls validate the graph. check=False is for prevalidated benchmarks only
 With an early target stop, non-finalized distances remain tentative.
 Tie-breaking is FIFO by the latest insertion or strict priority improvement.
 """
+
 from __future__ import annotations
+
 from heapq import heappop, heappush
 from itertools import count
 from math import inf
-from .common import Graph, Result, Stats, finish, validate_graph, print_result
+
+from .common import Graph, Result, Stats, finish, print_result, validate_graph
 
 
-def dijkstra_lazy(graph: Graph, start: str, target: str | None = None,
-                  *, check: bool = True) -> Result:
+def dijkstra_lazy(graph: Graph, start: str, target: str | None = None, *, check: bool = True) -> Result:
     if check:
         validate_graph(graph, start, target)
     dist = dict.fromkeys(graph, inf)
@@ -52,6 +54,7 @@ class IndexedMinPQ:
     insertion order of replacement records in the lazy implementation.
     heap is NOT sorted; sorted(heap) is a separate explanatory view.
     """
+
     def __init__(self):
         self.heap: list[tuple[float, int, str]] = []
         self.positions: dict[str, int] = {}
@@ -91,7 +94,7 @@ class IndexedMinPQ:
 
     def insert(self, node, priority):
         if node in self.positions:
-            raise ValueError('Node already in queue; use decrease_key.')
+            raise ValueError("Node already in queue; use decrease_key.")
         self.positions[node] = len(self.heap)
         self.heap.append((priority, next(self.ticket), node))
         self._up(len(self.heap) - 1)
@@ -101,13 +104,13 @@ class IndexedMinPQ:
             raise KeyError(node)
         i = self.positions[node]
         if priority >= self.heap[i][0]:
-            raise ValueError('decrease_key requires a strict improvement.')
+            raise ValueError("decrease_key requires a strict improvement.")
         self.heap[i] = (priority, next(self.ticket), node)
         self._up(i)
 
     def pop_min(self):
         if not self.heap:
-            raise IndexError('pop from empty priority queue')
+            raise IndexError("pop from empty priority queue")
         priority, _, node = self.heap[0]
         last = self.heap.pop()
         del self.positions[node]
@@ -125,8 +128,7 @@ class IndexedMinPQ:
                 assert self.heap[(i - 1) // 2] <= item
 
 
-def dijkstra_eager(graph: Graph, start: str, target: str | None = None,
-                   *, check: bool = True) -> Result:
+def dijkstra_eager(graph: Graph, start: str, target: str | None = None, *, check: bool = True) -> Result:
     if check:
         validate_graph(graph, start, target)
     dist = dict.fromkeys(graph, inf)
@@ -160,12 +162,14 @@ def dijkstra_eager(graph: Graph, start: str, target: str | None = None,
     return finish(dist, parent, start, target, stats, finalized)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import argparse
+
     from graphs.main_graph import GRAPH
+
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--eager', action='store_true')
-    p.add_argument('--all', action='store_true', help='Finalize every reachable distance.')
+    p.add_argument("--eager", action="store_true")
+    p.add_argument("--all", action="store_true", help="Finalize every reachable distance.")
     a = p.parse_args()
     fn = dijkstra_eager if a.eager else dijkstra_lazy
-    print_result(fn(GRAPH, 'S', None if a.all else 'T'))
+    print_result(fn(GRAPH, "S", None if a.all else "T"))

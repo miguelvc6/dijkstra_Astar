@@ -2,10 +2,12 @@
 
 Never use these for real routing. They exist to falsify classroom conjectures.
 """
+
 from heapq import heappop, heappush
 from itertools import count
 from math import inf
-from .common import Stats, finish, validate_graph, heuristic_cache
+
+from .common import Stats, finish, heuristic_cache, validate_graph
 
 
 def astar_closed_bug(graph, start, target, heuristic):

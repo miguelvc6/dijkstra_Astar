@@ -9,7 +9,7 @@ if __package__ in (None, ""):
 
 # python3 -m algorithms.04_dijkstra_eager_heap
 
-from indexed_min_heap import IndexedMinPQ
+from algorithms.indexed_min_heap import IndexedMinPQ
 
 
 def dijkstra_eager_heap(graph, start: str, target: str) -> tuple[float, list[str]]:

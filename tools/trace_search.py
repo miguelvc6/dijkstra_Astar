@@ -21,7 +21,7 @@ import math
 import sys
 from dataclasses import asdict
 from pathlib import Path
-from algorithms import dijkstra_lazy, dijkstra_eager, astar
+from algorithms import dijkstra_lazy_heap, dijkstra_eager_heap, astar
 from algorithms.indexed_min_heap import IndexedMinPQ
 from graphs.fixtures import main_case, grid_case
 
@@ -166,11 +166,11 @@ def build_traces():
     for key, case in cases.items():
         result[key] = {
             name: trace_function(fn, case)
-            for name, fn in [("lazy", dijkstra_lazy), ("eager", dijkstra_eager), ("astar", astar)]
+            for name, fn in [("lazy", dijkstra_lazy_heap), ("eager", dijkstra_eager_heap), ("astar", astar)]
         }
     result["all"] = {
         name: trace_function(fn, main_case(), all_distances=True)
-        for name, fn in [("lazy", dijkstra_lazy), ("eager", dijkstra_eager)]
+        for name, fn in [("lazy", dijkstra_lazy_heap), ("eager", dijkstra_eager_heap)]
     }
     return result
 

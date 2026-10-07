@@ -14,7 +14,7 @@ from math import hypot
 from pathlib import Path
 
 import cairosvg
-from graphs.fixtures import main_case, grid_case
+from graphs.fixtures import main_case
 
 INK = "#17323d"
 MUTED = "#64777b"
@@ -112,9 +112,6 @@ def build(root):
         ("main_graph_heuristic", main_case(), True, False, False, False),
         ("main_graph_solution", main_case(), False, True, False, False),
         ("main_graph_print", main_case(), False, False, True, False),
-        ("reopening_graph", reopening_case(), True, False, False, False),
-        ("reweighted_graph", reopening_case(), False, False, False, True),
-        ("negative_graph", negative_case(), False, False, False, False),
     ]
     for name, case, show_h, sol, mono, rw in variants:
         s = svg_graph(case, show_h, sol, mono, rw)
@@ -123,9 +120,6 @@ def build(root):
             bytestring=s.encode(), write_to=str(p / (name + ".png")), output_width=1800, output_height=1040
         )
     (p / "main_graph.json").write_text(json.dumps(main_case(), indent=2) + "\n")
-    (p / "counterexamples.json").write_text(
-        json.dumps({"reopening": reopening_case(), "negative": negative_case()}, indent=2) + "\n"
-    )
 
 
 if __name__ == "__main__":

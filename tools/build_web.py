@@ -8,6 +8,8 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
+import base64
+import gzip
 import json
 from pathlib import Path
 
@@ -21,8 +23,9 @@ def build(root):
     template = (root / "web/template.html").read_text()
     assert template.count("__TRACE_DATA__") == 1
     (root / "web/traces.json").write_text(encoded + "\n")
-    # Escaping '<' keeps source code unable to terminate its enclosing script tag.
-    (root / "web/visualizer.html").write_text(template.replace("__TRACE_DATA__", encoded.replace("<", "\\u003c")))
+    # Base64 is script-safe; gzip keeps the offline grid traces small.
+    compressed = base64.b64encode(gzip.compress(encoded.encode(), mtime=0)).decode()
+    (root / "web/visualizer.html").write_text(template.replace("__TRACE_DATA__", compressed))
     return data
 
 

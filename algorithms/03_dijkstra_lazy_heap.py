@@ -1,4 +1,12 @@
 """Dijkstra's shortest path algorithm using a lazy binary-heap-based priority queue."""
+
+# Allow both direct execution and package imports.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 # python3 -m algorithms.03_dijkstra_lazy_heap
 
 from heapq import heappop, heappush

@@ -1,12 +1,20 @@
 """Original vector diagrams, rendered from shared fixtures. No third-party art."""
 
+# Allow both direct execution and package imports.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+
 import json
 from html import escape
 from math import hypot
 from pathlib import Path
 
 import cairosvg
-from graphs.fixtures import main_case, negative_case, reopening_case
+from graphs.fixtures import main_case, grid_case
 
 INK = "#17323d"
 MUTED = "#64777b"

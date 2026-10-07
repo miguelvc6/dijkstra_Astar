@@ -7,6 +7,14 @@ No tracing is enabled by benchmark.py.
 """
 
 from __future__ import annotations
+
+# Allow both direct execution and package imports.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 import inspect
 import json
 import math
@@ -14,8 +22,8 @@ import sys
 from dataclasses import asdict
 from pathlib import Path
 from algorithms import dijkstra_lazy, dijkstra_eager, astar
-from algorithms.dijkstra import IndexedMinPQ
-from graphs.fixtures import main_case, reopening_case, overestimate_case
+from algorithms.indexed_min_heap import IndexedMinPQ
+from graphs.fixtures import main_case, grid_case
 
 
 def trace_function(fn, case, *, all_distances=False):
@@ -103,7 +111,7 @@ def trace_function(fn, case, *, all_distances=False):
         elif "parent[v]" in text:
             event["kind"] = "parent"
             event["message"] = "Replace the predecessor to match the improved route."
-        elif text.startswith("return finish"):
+        elif text.startswith("return "):
             event["kind"] = "finish"
             event["message"] = "Return the result. Target extraction is distinct from target discovery."
         elif "closed" in text and "if v in" in text:
@@ -131,24 +139,29 @@ def trace_function(fn, case, *, all_distances=False):
     try:
         sys.settrace(tracer)
         args = (g, case["start"], None if all_distances else case["target"])
-        result = fn(*args, case["h"]) if fn in [astar, astar_closed_bug] else fn(*args)
+        result = fn(*args, case["h"]) if fn is astar else fn(*args)
     finally:
         sys.settrace(old)
+    distance, path = result
     return dict(
         name=case["name"],
         algorithm=fn.__name__,
         case=case,
         source="".join(source_lines),
         first_source_line=start_line,
-        source_file=str(Path(inspect.getsourcefile(fn)).relative_to(Path(__file__).resolve().parents[1])),∏
+        source_file=str(Path(inspect.getsourcefile(fn)).relative_to(Path(__file__).resolve().parents[1])),
         events=events,
-        result=result.as_dict(),
+        result=dict(
+            distance=distance if math.isfinite(distance) else None,
+            path=path,
+            distances=events[-1]["dist"] if events else {},
+        ),
         all_distances=all_distances,
     )
 
 
 def build_traces():
-    cases = {"main": main_case(), "reopening": reopening_case(), "overestimate": overestimate_case()}
+    cases = {"main": main_case(), "grid": grid_case()}
     result = {}
     for key, case in cases.items():
         result[key] = {
@@ -163,7 +176,7 @@ def build_traces():
 
 
 if __name__ == "__main__":
-    out = Path("web/traces.json")
+    out = Path(__file__).resolve().parents[1] / "web/traces.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(build_traces(), separators=(",", ":"), allow_nan=False))
     print(out)

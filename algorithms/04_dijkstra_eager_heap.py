@@ -1,7 +1,15 @@
 """Dijkstra's shortest path algorithm using an eager indexed-heap-based priority queue."""
+
+# Allow both direct execution and package imports.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 # python3 -m algorithms.04_dijkstra_eager_heap
 
-from algorithms.indexed_min_heap import IndexedMinPQ
+from indexed_min_heap import IndexedMinPQ
 
 
 def dijkstra_eager_heap(graph, start: str, target: str) -> tuple[float, list[str]]:

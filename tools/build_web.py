@@ -1,9 +1,17 @@
 """Embed actual Python execution traces in a self-contained offline HTML file."""
 
+# Allow both direct execution and package imports.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+
 import json
 from pathlib import Path
 
-from .trace_search import build_traces
+from tools.trace_search import build_traces
 
 
 def build(root):

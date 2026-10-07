@@ -44,9 +44,6 @@ def svg_graph(case, show_h=False, solution=False, mono=False, reweight=False, st
         f'<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520"><rect width="900" height="520" fill="{PAPER}"/>'
     ]
     route = ["S", "A", "B", "C", "T"] if nine else ["S", "B", "A", "T"]
-    parts += [
-        '<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#63777b"/></marker></defs>'
-    ]
     bends = {("S", "B"): 100, ("S", "T"): 320, ("A", "C"): 190, ("B", "T"): 130, ("B", "A"): -70}
     for u, arcs in g.items():
         for v, w in arcs:
@@ -70,8 +67,18 @@ def svg_graph(case, show_h=False, solution=False, mono=False, reweight=False, st
             if reweight:
                 w = w + case["h"][v] - case["h"][u]
             parts.append(
-                f'<path d="M{sx},{sy} Q{cx},{cy} {ex},{ey}" fill="none" stroke="{col}" stroke-width="{width}" marker-end="url(#a)"/>'
+                f'<path d="M{sx},{sy} Q{cx},{cy} {ex},{ey}" fill="none" stroke="{col}" stroke-width="{width}"/>'
             )
+            # Draw the marker explicitly: CairoSVG's marker orientation differs
+            # from the browser. Match its triangle size and final edge tangent.
+            tx, ty = (ex - cx) / hypot(ex - cx, ey - cy), (ey - cy) / hypot(ex - cx, ey - cy)
+            scale = width * 0.6
+            tip = (ex + scale * tx, ey + scale * ty)
+            base = (ex - 9 * scale * tx, ey - 9 * scale * ty)
+            left = (base[0] - 5 * scale * ty, base[1] + 5 * scale * tx)
+            right = (base[0] + 5 * scale * ty, base[1] - 5 * scale * tx)
+            points = " ".join(f"{x},{y}" for x, y in [tip, left, right])
+            parts.append(f'<polygon points="{points}" fill="{col}"/>')
             parts.append(
                 f'<rect x="{lx - 16}" y="{ly - 15}" width="32" height="27" rx="5" fill="{PAPER}"/><text x="{lx}" y="{ly + 6}" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="bold" fill="{INK}">{w}</text>'
             )

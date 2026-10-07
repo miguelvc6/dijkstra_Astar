@@ -19,13 +19,3 @@ The numerical graphs, illustrations, code, exercises, and experimental measureme
 **[R7] Mo Chen et al. (2007).** Priority Queues and Dijkstra's Algorithm. Technical Report TR-07-54. Experimental evidence that a decrease-key implementation need not be faster on a given workload. https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf
 
 **[R8] Ran Duan, Jiayi Mao, Xiao Mao, Xinkai Shu, Longhui Yin (2025).** Breaking the Sorting Barrier for Directed Single-Source Shortest Paths. arXiv:2504.17033, version 2. A deterministic O(m log^(2/3) n) bound in the comparison-addition model. This is a research note, not an algorithm implemented here or a claim about the current best bound in every model. https://arxiv.org/abs/2504.17033v2
-
-## Pedagogical inspiration
-
-**[P1] Otto Toeplitz.** *The Calculus: A Genetic Approach*. University of Chicago Press. The approach motivates concepts through their intellectual genesis; this lecture is a rational reconstruction, not a historical account of Dijkstra or A*. https://press.uchicago.edu/ucp/books/book/chicago/C/bo5485725.html
-
-**[P2] Imre Lakatos (1976).** *Proofs and Refutations: The Logic of Mathematical Discovery*. Edited by John Worrall and Elie Zahar. Cambridge University Press. https://www.cambridge.org/core/books/proofs-and-refutations/575FC8A6B4FAB79E649EDF5FBB9C6E10
-
-## Citation and implementation notes
-
-References such as [R2] in the slides and guide point to these entries. The lecturer's questions, proofs, graph designs, and implementations are newly written. A cited source need not use the same exact code variant or counting convention. The implementation contract and measured counters are defined in `docs/technical_notes.md`; they take precedence when interpreting the supplied results.

@@ -9,14 +9,24 @@ if __package__ in (None, ""):
 
 # python3 -m algorithms.02_dijkstra_lazy_list
 
-def dijkstra_lazy_list(graph, start: str, target: str) -> tuple[float, list[str]]:
-    """Finds the lowest-cost path from start to target using an unsorted list as a lazy queue."""
-    dist: dict[str, float] = dict.fromkeys(graph, float("inf"))
-    parent: dict[str, str] = {}
+"""
+1. Declare variables
+2. while queue loop
+3. extract_min
+4. Iterate on neighbours
+5. Skip stales
+6. Target reached
+7. Return empty path when queue empty and target not reached
+"""
 
+def dijkstra_lazy_list(graph: dict, start: str, target: str) -> tuple[float, list[str]]:
+    """Finds the lowest-cost path from start to target using an unsorted list as a lazy queue."""
+
+    # 1. Declare variables
+    dist: dict[str, float] = dict.fromkeys(graph, float("inf"))
     dist[start] = 0.0
-    # Store entries as (cost, node); new candidates are appended lazily
-    queue: list[tuple[float, str]] = [(0.0, start)]
+    parent: dict[str, str] = {}
+    queue: list[tuple[float, str]] = [(dist[start], start)] # Store entries as (cost, node)
 
     def extract_min(queue: list[tuple[float, str]]) -> tuple[float, str]:
         """Finds, removes, and returns the element with the minimum cost from the queue."""
@@ -29,27 +39,26 @@ def dijkstra_lazy_list(graph, start: str, target: str) -> tuple[float, list[str]
 
         return queue.pop(min_idx)
 
-    while queue:
-        popped_g, u = extract_min(queue)
+    while queue: # 2. While queue loop
+        popped_dist, u = extract_min(queue) # 3. extract_min
 
-        # Skip stale entries
-        if popped_g != dist[u]:
+        if popped_dist != dist[u]: # 5. Skip stales
             continue
 
-        if u == target:
+        if u == target: # 6. Target reached
             path = [target]
             while path[-1] != start:
                 path.append(parent[path[-1]])
             return dist[target], path[::-1]
 
-        for v, weight in graph[u]:
-            candidate = popped_g + weight
-            if candidate < dist[v]:
-                dist[v] = candidate
+        for v, weight in graph[u]: # 4. Iterate on neighbours
+            candidate_dist = popped_dist + weight
+            if candidate_dist < dist[v]:
+                dist[v] = candidate_dist
                 parent[v] = u
-                queue.append((candidate, v))
+                queue.append((candidate_dist, v))
 
-    return float("inf"), []
+    return float("inf"), [] # 7. Return empty path when queue empty and target not reached
 
 
 if __name__ == "__main__":

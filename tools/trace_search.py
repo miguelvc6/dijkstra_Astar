@@ -15,10 +15,13 @@ if __package__ in (None, ""):
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import ast
 import inspect
+import io
 import json
 import math
 import sys
+import tokenize
 from dataclasses import asdict
 from pathlib import Path
 from algorithms import dijkstra_lazy_heap, dijkstra_eager_heap, astar
@@ -26,8 +29,34 @@ from algorithms.indexed_min_heap import IndexedMinPQ
 from graphs.fixtures import main_case, grid_case
 
 
+def display_source(source_lines):
+    """Remove comments and docstrings, retaining a map for executed lines."""
+    source = "".join(source_lines)
+    lines = list(source_lines)
+    omitted = set()
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+            omitted.update(range(node.lineno, node.end_lineno + 1))
+    for token in tokenize.generate_tokens(io.StringIO(source).readline):
+        if token.type == tokenize.COMMENT:
+            row, column = token.start
+            if not lines[row - 1][:column].strip():
+                omitted.add(row)
+            else:
+                lines[row - 1] = lines[row - 1][:column].rstrip() + "\n"
+    displayed = []
+    line_map = {}
+    for row, line in enumerate(lines, 1):
+        if row not in omitted:
+            displayed.append(line)
+            line_map[row] = len(displayed)
+    return "".join(displayed), line_map
+
+
 def trace_function(fn, case, *, all_distances=False):
     source_lines, start_line = inspect.getsourcelines(fn)
+    source, line_map = display_source(source_lines)
+    displayed_lines = source.splitlines()
     code = fn.__code__
     pending = {}
     events = []
@@ -55,11 +84,13 @@ def trace_function(fn, case, *, all_distances=False):
                     stale=queued_g != local["dist"].get(node, math.inf),
                 )
             )
-        relative = lineno - start_line + 1
-        text = source_lines[relative - 1].strip()
+        relative = line_map.get(lineno - start_line + 1)
+        if relative is None:
+            return
+        text = displayed_lines[relative - 1].strip()
         scalar = {
             k: local[k]
-            for k in ["u", "v", "weight", "candidate", "popped_g", "popped_f", "priority"]
+            for k in ["u", "v", "weight", "candidate_dist", "popped_dist", "priority"]
             if k in local
             and isinstance(local[k], (str, int, float))
             and (not isinstance(local[k], float) or math.isfinite(local[k]))
@@ -84,7 +115,7 @@ def trace_function(fn, case, *, all_distances=False):
         event["changed"] = changed
         if "heappop(" in text or ".pop_min(" in text:
             event["kind"] = "pop"
-            event["message"] = f"Extract {scalar.get('u', '?')} with queued g = {scalar.get('popped_g', '?')}."
+            event["message"] = f"Extract {scalar.get('u', '?')} with popped_dist = {scalar.get('popped_dist', '?')}."
         elif "heappush(" in text or "queue.insert(" in text:
             event["kind"] = "push"
             event["message"] = (
@@ -147,7 +178,7 @@ def trace_function(fn, case, *, all_distances=False):
         name=case["name"],
         algorithm=fn.__name__,
         case=case,
-        source="".join(source_lines),
+        source=source,
         first_source_line=start_line,
         source_file=str(Path(inspect.getsourcefile(fn)).relative_to(Path(__file__).resolve().parents[1])),
         events=events,

@@ -7,44 +7,36 @@ if __package__ in (None, ""):
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-# python3 -m algorithms.01_brute_force
-
-class BudgetExceeded(Exception):
-    pass
+# python3 -m algorithms.01_depth_first
 
 
-def brute_force(graph, start: str, target: str, *, max_iter: int = 100_000) -> tuple[float, list[str]]:
+def depth_first(graph, start: str, target: str) -> tuple[float, list[str]]:
     """Finds the lowest-cost simple path between start and target using backtracking."""
-    path: list[str] = [start]
-    on_path: set[str] = {start}
+    path: list[str] = [start] # currently taken path
+    visited: set[str] = {start} # visited nodes
 
     def explore(
-        u: str, cost: float, best_cost: float, best_path: list[str], iter: int
-    ) -> tuple[float, list[str], int]:
+        u: str, cost: float, best_cost: float, best_path: list[str]
+    ) -> tuple[float, list[str]]:
         """Recursively traverses graph nodes to update the lowest-cost path."""
-
-        # Budget max iterations
-        iter += 1
-        if iter >= max_iter:
-            raise BudgetExceeded
 
         # Exit condition
         if u == target:
             if cost < best_cost:
-                return cost, path, iter
-            return best_cost, best_path, iter
+                return cost, path
+            return best_cost, best_path
 
-        for v, weight in graph[u]: # Iterate on vertices of u
-            if v not in on_path:
-                on_path.add(v)
+        for v, weight in graph[u]:  # Iterate on neighbours of u
+            if v not in visited:
+                visited.add(v)
                 path.append(v)
-                best_cost, best_path, iter = explore(v, cost + weight, best_cost, best_path, iter)
+                best_cost, best_path = explore(v, cost + weight, best_cost, best_path)
                 path.pop()
-                on_path.remove(v)
+                visited.remove(v)
 
-        return best_cost, best_path, iter
+        return best_cost, best_path
 
-    best_cost, best_path, _ = explore(start, 0.0, float("inf"), [], 0)
+    best_cost, best_path = explore(start, 0.0, float("inf"), [])
 
     return best_cost, best_path
 
@@ -52,4 +44,4 @@ def brute_force(graph, start: str, target: str, *, max_iter: int = 100_000) -> t
 if __name__ == "__main__":
     from graphs.main_graph import GRAPH
 
-    print(brute_force(GRAPH, "S", "T"))
+    print(depth_first(GRAPH, "S", "T"))

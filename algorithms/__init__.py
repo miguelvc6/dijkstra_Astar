@@ -7,7 +7,7 @@ runpy's double-import warning.
 from importlib import import_module
 
 _EXPORTS = {
-    "brute_force": (".01_brute_force", "brute_force"),
+    "depth_first": (".01_depth_first", "depth_first"),
     "dijkstra_lazy_list": (".02_dijkstra_lazy_list", "dijkstra_lazy_list"),
     "dijkstra_lazy_heap": (".03_dijkstra_lazy_heap", "dijkstra_lazy_heap"),
     "dijkstra_eager_heap": (".04_dijkstra_eager_heap", "dijkstra_eager_heap"),

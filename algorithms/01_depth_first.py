@@ -23,7 +23,7 @@ def depth_first(graph, start: str, target: str) -> tuple[float, list[str]]:
         # Exit condition
         if u == target:
             if cost < best_cost:
-                return cost, path
+                return cost, path.copy()
             return best_cost, best_path
 
         for v, weight in graph[u]:  # Iterate on neighbours of u

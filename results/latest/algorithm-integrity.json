@@ -1,0 +1,21 @@
+{
+  "unchanged": true,
+  "before": {
+    "algorithms/__init__.py": "27df590f9d8274549b602dff84ada36dadb239158720e70efe75474dbcc6dcfb",
+    "algorithms/02_dijkstra_lazy_list.py": "ea0edbeb6e24a21aca8798386879ae89e368bcfb5bda71a60714ded464db8429",
+    "algorithms/04_dijkstra_eager_heap.py": "f8bdc889d028affe0785e2f0ffe42616b525d0ef59c9bac6c601f673b2d0f630",
+    "algorithms/05_astar.py": "abb1167766f803495b80c681640f9b17ae80e433df4df806702c17aea6aab824",
+    "algorithms/01_depth_first.py": "f5abd1e88ee7cd058a31e49277c092b49e4592ddfbb6dab8b22f36eaa344bf97",
+    "algorithms/indexed_min_heap.py": "bbade5b62aa6bda2b5e4bf5d97fc9ca939ea9b64b3bc23cd6418c468f3826454",
+    "algorithms/03_dijkstra_lazy_heap.py": "b80912b068cf9cd481a7819cd59575061f0c47b5db3072748e6966465dbe9af3"
+  },
+  "after": {
+    "algorithms/__init__.py": "27df590f9d8274549b602dff84ada36dadb239158720e70efe75474dbcc6dcfb",
+    "algorithms/02_dijkstra_lazy_list.py": "ea0edbeb6e24a21aca8798386879ae89e368bcfb5bda71a60714ded464db8429",
+    "algorithms/04_dijkstra_eager_heap.py": "f8bdc889d028affe0785e2f0ffe42616b525d0ef59c9bac6c601f673b2d0f630",
+    "algorithms/05_astar.py": "abb1167766f803495b80c681640f9b17ae80e433df4df806702c17aea6aab824",
+    "algorithms/01_depth_first.py": "f5abd1e88ee7cd058a31e49277c092b49e4592ddfbb6dab8b22f36eaa344bf97",
+    "algorithms/indexed_min_heap.py": "bbade5b62aa6bda2b5e4bf5d97fc9ca939ea9b64b3bc23cd6418c468f3826454",
+    "algorithms/03_dijkstra_lazy_heap.py": "b80912b068cf9cd481a7819cd59575061f0c47b5db3072748e6966465dbe9af3"
+  }
+}

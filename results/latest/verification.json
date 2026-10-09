@@ -1,0 +1,17 @@
+{
+  "cases": 90,
+  "unique_graph_endpoint_inputs": 86,
+  "configurations": 598,
+  "validated_replays": 516,
+  "raw_timing_samples": 4644,
+  "source_hashes_match": true,
+  "algorithms_unchanged_from_run_start": true,
+  "osm_hash_matches": true,
+  "input_archive_sha256": "b2a56527eb51b7f4ba12f79947a7a7e2b2353e84a5ed7f856e053a3871fd3668",
+  "cases_archive": "cases.json.gz",
+  "statuses": {
+    "ok": 515,
+    "skipped": 82,
+    "timeout": 1
+  }
+}

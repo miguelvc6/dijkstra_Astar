@@ -1,0 +1,10 @@
+{
+  "scenarios": 15,
+  "animation_runs": 89,
+  "benchmark_rows": 598,
+  "offline": true,
+  "game_actor_moves": true,
+  "mobile_layout": true,
+  "legacy_visualizer": true,
+  "page_errors": []
+}

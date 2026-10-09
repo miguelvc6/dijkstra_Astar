@@ -1,0 +1,4 @@
+# Experiment and plotting dependencies; lecture algorithms remain dependency-free.
+networkx>=3.4,<4
+matplotlib>=3.9,<4
+Pillow>=10,<13

@@ -1,0 +1,16 @@
+{
+  "source": "OpenStreetMap contributors",
+  "source_url": "https://www.openstreetmap.org/copyright",
+  "license": "ODbL-1.0",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "query": "[out:json][timeout:25];way[\"highway\"~\"^(primary|secondary|tertiary|residential|living_street|unclassified|service)$\"](48.205,16.352,48.218,16.373);(._;>;);out body;",
+  "bbox": [
+    48.205,
+    16.352,
+    48.218,
+    16.373
+  ],
+  "retrieved_utc": "2026-10-08T09:40:50.975754+00:00",
+  "sha256": "fbecaf8f44e44a618370a75a371e17b9c0b274d2562b8ee55e84439c4506e95c",
+  "osm_timestamp": "2026-10-08T09:38:39Z"
+}

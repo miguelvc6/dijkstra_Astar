@@ -1,6 +1,8 @@
 # Build-only dependencies; the algorithms and unittest suite use the standard library.
-python-pptx>=1.0.2,<2
-reportlab>=4.2,<5
 Pillow>=10,<13
 CairoSVG>=2.7,<3
-PyMuPDF>=1.24,<2
+
+# Experiment and plotting dependencies; lecture algorithms remain dependency-free.
+networkx>=3.4,<4
+matplotlib>=3.9,<4
+Pillow>=10,<13

@@ -16,4 +16,8 @@ def depth_first():
 if __name__ == "__main__":
     from graphs.main_graph import GRAPH
 
-    print(depth_first(GRAPH, "S", "T"))
+    # print(depth_first(GRAPH, "S", "T"))
+    # print(dijkstra_lazy_list(GRAPH, "S", "T"))
+    # print(dijkstra_lazy_heap(GRAPH, "S", "T"))
+    # print(dijkstra_eager_heap(GRAPH, "S", "T"))
+    # print(astar(GRAPH, "S", "T", HEURISTIC))
